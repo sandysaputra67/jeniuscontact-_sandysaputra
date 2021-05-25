@@ -1,0 +1,36 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'JeniusCrudApp' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for JeniusCrudApp
+
+  target 'JeniusCrudApp-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+    pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+    pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
+  end
+
+  target 'JeniusCrudAppTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'JeniusCrudApp-tvOS' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for JeniusCrudApp-tvOS
+
+  target 'JeniusCrudApp-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
