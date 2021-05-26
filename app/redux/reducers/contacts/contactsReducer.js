@@ -5,15 +5,20 @@ import {
   SAVE_CONTACT,
   SAVE_CONTACT_FAILED,
   SAVE_CONTACT_SUCCESS,
+  GET_CONTACT_DETAILS,
+  GET_CONTACT_DETAILS_FAILED,
+  GET_CONTACT_DETAILS_SUCCESS,
 } from '../../actions/contacts/contactsActionsConstants';
 
 const initialState = {
   actionStatus: '',
   loading: false,
   saveLoading: false,
+  detailsLoading: false,
   contacts: [],
-  error: {},
+  contactDetails: {},
   message: '',
+  error: {},
 };
 
 const contactsReducer = (state = initialState, action) => {
@@ -25,43 +30,65 @@ const contactsReducer = (state = initialState, action) => {
         loading: true,
         error: {},
         contacts: [],
-      }
+      };
     case GET_ALL_CONTACTS_FAILED:
       return {
         ...state,
         actionStatus: GET_ALL_CONTACTS_FAILED,
         loading: false,
         error: action.error,
-      }
+      };
     case GET_ALL_CONTACTS_SUCCESS:
       return {
         ...state,
         actionStatus: GET_ALL_CONTACTS_SUCCESS,
         loading: false,
         contacts: action.data,
-      }
+      };
     case SAVE_CONTACT:
       return {
         ...state,
         actionStatus: SAVE_CONTACT,
         saveLoading: true,
         error: {},
-      }
+        message: '',
+      };
     case SAVE_CONTACT_FAILED:
       return {
         ...state,
         actionStatus: SAVE_CONTACT_FAILED,
         saveLoading: false,
         error: action.error,
-      }
+      };
     case SAVE_CONTACT_SUCCESS:
       return {
         ...state,
         actionStatus: SAVE_CONTACT_SUCCESS,
         saveLoading: false,
         message: action.data,
-      }
-
+      };
+    case GET_CONTACT_DETAILS:
+      return {
+        ...state,
+        actionStatus: GET_CONTACT_DETAILS,
+        detailsLoading: true,
+        error: {},
+        contactDetails: {},
+      };
+    case GET_CONTACT_DETAILS_FAILED:
+      return {
+        ...state,
+        actionStatus: GET_CONTACT_DETAILS_FAILED,
+        detailsLoading: false,
+        error: action.error,
+      };
+    case GET_CONTACT_DETAILS_SUCCESS:
+      return {
+        ...state,
+        actionStatus: GET_CONTACT_DETAILS_SUCCESS,
+        detailsLoading: false,
+        contactDetails: action.data,
+      };
     default:
       return { ...state };
   }

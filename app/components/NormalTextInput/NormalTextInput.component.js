@@ -39,6 +39,8 @@ const NormalTextInput = ({
         value={value}
         autoCapitalize={autoCapitalize}
         onEndEditing={onEndEditing}
+        multiline
+        blurOnSubmit
       />
       {renderUnderline && <View style={Styles.underline} />}
     </View>

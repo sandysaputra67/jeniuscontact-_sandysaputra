@@ -30,12 +30,12 @@ const Styles = StyleSheet.create({
     height: 16.4,
     width: 17,
   },
-  right: {
+  right: (isLeftButtonFunction) => ({
     height: '100%',
     width: '20%',
     justifyContent: 'center',
-    alignItems: 'flex-end',
-  },
+    alignItems: isLeftButtonFunction ? 'center' : 'flex-end',
+  }),
   rightIcon: {
     height: 25,
     width: 25,

@@ -51,11 +51,22 @@ class AllContactsScreen extends Component {
     }
   }
 
+  goToDetails = (id) => () => {
+    const { navigation } = this.props;
+    navigation.navigate({
+      routeName: Routes.ContactDetails,
+      params: {
+        id,
+      },
+    });
+  }
+
   renderItem = ({ item, index }) => {
     return (
       <ContactCard
         firstName={item.firstName}
         lastName={item.lastName}
+        onPress={this.goToDetails(item.id)}
       />
     );
   }

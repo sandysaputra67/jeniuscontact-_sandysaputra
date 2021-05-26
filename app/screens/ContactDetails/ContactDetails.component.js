@@ -5,29 +5,33 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
-import { isEmpty } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { Styles } from './AddContact.styles';
+import { Styles } from './ContactDetails.styles';
 import { Fonts } from '../../themes/fonts';
 import { Colors } from '../../themes/colors';
 import { Routes } from '../../navigation/screenConfig/routes';
+import { Images } from '../../themes/images';
 import { returnNumberOnly } from '../../utils/helpers';
 import { NavigationActions, StackActions } from 'react-navigation';
 import Button from '../../components/Button/Button.component';
 import StackHeader from '../../components/StackHeader/StackHeader.component';
 import NormalTextInput from '../../components/NormalTextInput/NormalTextInput.component';
 
-class AddContact extends Component {
+class ContactDetails extends Component {
   static navigationOptions = ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
     return {
       header: (
         <StackHeader
-          title={'Add Contact'}
+          title={'Details'}
           onPressLeft={goBack}
+          rightIcon={Images.DELETE}
+          onPressRight={goBack}
         />
       ),
     };
@@ -41,6 +45,42 @@ class AddContact extends Component {
       photo: '',
       age: '',
     };
+  }
+
+  async componentDidMount() {
+    const { navigation, requestGetContactDetails } = this.props;
+    const contactId = navigation.getParam('id', '31ffaf90-be0b-11eb-aad8-e7e243d6495f');
+
+    await requestGetContactDetails(contactId);
+
+    const { error } = this.props;
+    if (!isEmpty(error)) {
+      Alert.alert(
+        'Oops!',
+        'Something went wrong',
+        [
+          { text: 'OK', onPress: () => navigation.goBack() },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.autoFillContact();
+    }
+  }
+
+  autoFillContact = () => {
+    const { contactDetails } = this.props;
+    const firstName = get(contactDetails, 'firstName', '');
+    const lastName = get(contactDetails, 'lastName', '');
+    const photo = get(contactDetails, 'photo', '');
+    const age = get(contactDetails, 'age', '');
+
+    this.setState({
+      firstName,
+      lastName,
+      photo,
+      age: String(age),
+    })
   }
 
   dismissKeyboard = () => {
@@ -196,7 +236,7 @@ class AddContact extends Component {
         <Button
           height={40}
           width={'100%'}
-          text='SAVE'
+          text='EDIT'
           onPress={this.onPressSave}
           disabled={disabled}
           loading={saveLoading}
@@ -206,6 +246,16 @@ class AddContact extends Component {
   }
 
   render() {
+    const { detailsLoading } = this.props;
+
+    if (detailsLoading) {
+      return (
+        <View style={Styles.loading}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+
     return (
       <TouchableWithoutFeedback onPress={this.dismissKeyboard}>
         <KeyboardAwareScrollView
@@ -225,4 +275,4 @@ class AddContact extends Component {
   }
 }
 
-export default AddContact;
+export default ContactDetails;

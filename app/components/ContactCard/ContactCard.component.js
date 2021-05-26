@@ -9,8 +9,9 @@ import { Styles } from './ContactCard.styles';
 const ContactCard = ({
   firstName,
   lastName,
+  onPress,
 }) => (
-  <TouchableOpacity style={Styles.container}>
+  <TouchableOpacity onPress={onPress} style={Styles.container}>
     <Text style={Styles.contactName}>
       {`${firstName} ${lastName}`}
     </Text>

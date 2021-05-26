@@ -24,6 +24,9 @@ const Styles = StyleSheet.create({
   buttonContainer: {
     marginBottom: 10,
   },
+  loading: {
+    marginTop: 10,
+  }
 });
 
 export { Styles };

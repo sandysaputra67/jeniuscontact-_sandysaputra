@@ -41,7 +41,7 @@ const StackHeader = ({
     </View>
     {
       rightIcon && (
-        <View style={Styles.right}>
+        <View style={Styles.right(isFunction(onPressLeft))}>
           <TouchableOpacity onPress={onPressRight}>
             <Image
               source={rightIcon}

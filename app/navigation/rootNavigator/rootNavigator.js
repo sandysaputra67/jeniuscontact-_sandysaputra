@@ -1,6 +1,6 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-import { AllContactsScreen, AddContact } from '../screenConfig/screenConfig';
+import { AllContactsScreen, AddContact, ContactDetails } from '../screenConfig/screenConfig';
 import { Routes } from '../screenConfig/routes';
 
 const rootNavigator = createStackNavigator({
@@ -9,6 +9,9 @@ const rootNavigator = createStackNavigator({
   },
   AddContact: {
     screen: AddContact,
+  },
+  ContactDetails: {
+    screen: ContactDetails,
   },
 }, {
   initialRouteName: Routes.AllContactsScreen,
