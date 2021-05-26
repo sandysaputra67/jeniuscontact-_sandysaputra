@@ -12,7 +12,9 @@ import { isFunction } from 'lodash';
 
 const StackHeader = ({
   title,
+  rightIcon,
   onPressLeft,
+  onPressRight,
 }) => (
   <View style={Styles.container}>
     <View style={Styles.left(isFunction(onPressLeft))}>
@@ -37,6 +39,19 @@ const StackHeader = ({
         {title}
       </Text>
     </View>
+    {
+      rightIcon && (
+        <View style={Styles.right}>
+          <TouchableOpacity onPress={onPressRight}>
+            <Image
+              source={rightIcon}
+              style={Styles.rightIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
+      )
+    }
   </View>
 );
 

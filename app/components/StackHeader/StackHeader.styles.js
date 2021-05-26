@@ -30,6 +30,16 @@ const Styles = StyleSheet.create({
     height: 16.4,
     width: 17,
   },
+  right: {
+    height: '100%',
+    width: '20%',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  rightIcon: {
+    height: 25,
+    width: 25,
+  },
 });
 
 export { Styles };

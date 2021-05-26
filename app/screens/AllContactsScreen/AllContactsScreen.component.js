@@ -6,15 +6,22 @@ import {
 } from 'react-native';
 
 import { Styles } from './AllContactsScreen.styles';
+import { Images } from '../../themes/images';
+import { Routes } from '../../navigation/screenConfig/routes';
+import { keyExtractor } from '../../utils/helpers';
 import StackHeader from '../../components/StackHeader/StackHeader.component';
 import ContactCard from '../../components/ContactCard/ContactCard.component';
 
 class AllContactsScreen extends Component {
   static navigationOptions = ({ navigation }) => {
+    const goToAddContact = () => navigation.navigate(Routes.AddContact)
+
     return {
       header: (
         <StackHeader
           title={'Contacts'}
+          rightIcon={Images.PLUS}
+          onPressRight={goToAddContact}
         />
       ),
     };
@@ -59,6 +66,7 @@ class AllContactsScreen extends Component {
     return (
       <FlatList
         data={contacts}
+        keyExtractor={keyExtractor}
         renderItem={this.renderItem}
         ListEmptyComponent={this.renderEmptyComponent}
         ItemSeparatorComponent={this.renderSeparator}
