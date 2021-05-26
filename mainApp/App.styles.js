@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { Colors } from '../app/assets/colors';
+import { Colors } from '../app/themes/colors';
 
 const Styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
-    backgroundColor: Colors.DARK_CERULEAN,
+    backgroundColor: Colors.JENIUS_BLUE,
   },
   container: {
     flex: 1,

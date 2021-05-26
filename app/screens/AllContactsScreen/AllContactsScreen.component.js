@@ -15,7 +15,7 @@ class AllContactsScreen extends Component {
   render() {
     return (
       <View style={Styles.container}>
-        <Text>
+        <Text style={Styles.title}>
           All Contacts Screen!
         </Text>
       </View>

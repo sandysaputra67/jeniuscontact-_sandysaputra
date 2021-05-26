@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { Styles } from './App.styles';
-import { Colors } from '../app/assets/colors';
+import { Colors } from '../app/themes/colors';
 import RootNavigator from '../app/navigation/rootNavigator/rootNavigator';
 
 class App extends Component {
@@ -25,7 +25,7 @@ class App extends Component {
     return (
       <SafeAreaView style={Styles.safeAreaView}>
         <StatusBar
-          backgroundColor={Colors.DARK_CERULEAN}
+          backgroundColor={Colors.JENIUS_BLUE}
           barStyle="light-content"
         />
         <View style={Styles.container}>

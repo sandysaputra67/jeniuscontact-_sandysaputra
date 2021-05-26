@@ -1,5 +1,5 @@
 const Colors = {
-  DARK_CERULEAN: 'rgba(9, 67, 129, 1)',
+  JENIUS_BLUE: 'rgba(62, 154, 205, 1)',
 };
 
 export { Colors };
