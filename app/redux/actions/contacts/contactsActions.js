@@ -11,11 +11,18 @@ import {
   GET_CONTACT_DETAILS,
   GET_CONTACT_DETAILS_FAILED,
   GET_CONTACT_DETAILS_SUCCESS,
+  EDIT_CONTACT,
+  EDIT_CONTACT_FAILED,
+  EDIT_CONTACT_SUCCESS,
+  DELETE_CONTACT,
+  DELETE_CONTACT_FAILED,
+  DELETE_CONTACT_SUCCESS,
 } from './contactsActionsConstants';
 import {
   getAllContacts as getAllContactsEndpoint,
   saveContact as saveContactEndpoint,
   getContactDetails as getContactDetailsEndpoint,
+  editContact as editContactEndpoint
 } from '../../../api/contacts/contactsEndpoints';
 
 const getAllContacts = () => ({
@@ -105,8 +112,43 @@ const requestGetContactDetails = (contactId) => async (dispatch) => {
   }
 };
 
+const editContact = () => ({
+  type: EDIT_CONTACT,
+});
+
+const editContactFailed = (error) => ({
+  type: EDIT_CONTACT_FAILED,
+  error,
+});
+
+const editContactSuccess = (data) => ({
+  type: EDIT_CONTACT_SUCCESS,
+  data,
+});
+
+const requestEditContact = (contactId, firstName, lastName, photo, age) => async (dispatch) => {
+  dispatch(editContact());
+
+  try {
+    const result = await axios.put(editContactEndpoint(contactId), {
+      firstName,
+      lastName,
+      photo,
+      age,
+    })
+
+    const data = get(result, 'data.message', '');
+    dispatch(editContactSuccess(data));
+
+  } catch (error) {
+    console.log(error)
+    dispatch(editContactFailed(error.response));
+  }
+}
+
 export {
   requestGetAllContacts,
   requestSaveContact,
   requestGetContactDetails,
+  requestEditContact,
 };

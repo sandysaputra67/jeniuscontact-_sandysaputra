@@ -7,7 +7,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, isEqual } from 'lodash';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { Styles } from './ContactDetails.styles';
@@ -49,7 +49,7 @@ class ContactDetails extends Component {
 
   async componentDidMount() {
     const { navigation, requestGetContactDetails } = this.props;
-    const contactId = navigation.getParam('id', '31ffaf90-be0b-11eb-aad8-e7e243d6495f');
+    const contactId = navigation.getParam('id');
 
     await requestGetContactDetails(contactId);
 
@@ -100,11 +100,14 @@ class ContactDetails extends Component {
     }
   }
 
-  onPressSave = async () => {
+  onPressEdit = async () => {
+    const { navigation } = this.props;
     const { firstName, lastName, photo, age } = this.state;
-    const { requestSaveContact, error } = this.props;
+    const { requestEditContact, error } = this.props;
+    const contactId = navigation.getParam('id');
 
-    await requestSaveContact(
+    await requestEditContact(
+      contactId,
       firstName,
       lastName,
       photo,
@@ -114,7 +117,7 @@ class ContactDetails extends Component {
     if (isEmpty(error)) {
       Alert.alert(
         'Success!',
-        'Successfully saved contact',
+        'Successfully edited contact',
         [
           { text: 'OK', onPress: this.resetNavigation },
         ],
@@ -223,12 +226,23 @@ class ContactDetails extends Component {
   }
 
   renderButton = () => {
-    const { saveLoading } = this.props;
+    const { editLoading, contactDetails, navigation } = this.props;
     const { firstName, lastName, photo, age } = this.state;
+    const contactId = navigation.getParam('id');
     let disabled = true;
 
     if (firstName && lastName && photo && age) {
-      disabled = false;
+      const editedContact = {
+        id: contactId,
+        age: Number(age),
+        firstName,
+        lastName,
+        photo,
+      }
+
+      if (!isEqual(editedContact, contactDetails)) {
+        disabled = false;
+      }
     }
 
     return (
@@ -237,9 +251,9 @@ class ContactDetails extends Component {
           height={40}
           width={'100%'}
           text='EDIT'
-          onPress={this.onPressSave}
+          onPress={this.onPressEdit}
           disabled={disabled}
-          loading={saveLoading}
+          loading={editLoading}
         />
       </View>
     );

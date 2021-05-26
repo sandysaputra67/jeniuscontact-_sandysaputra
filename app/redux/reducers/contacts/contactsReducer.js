@@ -8,6 +8,12 @@ import {
   GET_CONTACT_DETAILS,
   GET_CONTACT_DETAILS_FAILED,
   GET_CONTACT_DETAILS_SUCCESS,
+  EDIT_CONTACT,
+  EDIT_CONTACT_FAILED,
+  EDIT_CONTACT_SUCCESS,
+  DELETE_CONTACT,
+  DELETE_CONTACT_FAILED,
+  DELETE_CONTACT_SUCCESS,
 } from '../../actions/contacts/contactsActionsConstants';
 
 const initialState = {
@@ -15,6 +21,7 @@ const initialState = {
   loading: false,
   saveLoading: false,
   detailsLoading: false,
+  editLoading: false,
   contacts: [],
   contactDetails: {},
   message: '',
@@ -88,6 +95,28 @@ const contactsReducer = (state = initialState, action) => {
         actionStatus: GET_CONTACT_DETAILS_SUCCESS,
         detailsLoading: false,
         contactDetails: action.data,
+      };
+    case EDIT_CONTACT:
+      return {
+        ...state,
+        actionStatus: EDIT_CONTACT,
+        editLoading: true,
+        error: {},
+        message: '',
+      };
+    case EDIT_CONTACT_FAILED:
+      return {
+        ...state,
+        actionStatus: EDIT_CONTACT_FAILED,
+        editLoading: false,
+        error: action.error,
+      };
+    case EDIT_CONTACT_SUCCESS:
+      return {
+        ...state,
+        actionStatus: EDIT_CONTACT_SUCCESS,
+        editLoading: false,
+        message: action.data,
       };
     default:
       return { ...state };
