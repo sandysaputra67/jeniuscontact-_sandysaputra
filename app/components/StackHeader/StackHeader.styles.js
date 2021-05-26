@@ -23,7 +23,7 @@ const Styles = StyleSheet.create({
   },
   titleText: {
     fontFamily: Fonts.LatoRegular,
-    fontSize: 16,
+    fontSize: 20,
     color: Colors.WHITE,
   },
   backIcon: {

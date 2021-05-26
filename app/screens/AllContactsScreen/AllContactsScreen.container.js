@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import AllContactsScreen from './AllContactsScreen.component';
 import { requestGetAllContacts } from '../../redux/actions/contacts/contactsActions';
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  contacts: state.contacts.contacts,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   requestGetAllContacts: () => dispatch(requestGetAllContacts()),
