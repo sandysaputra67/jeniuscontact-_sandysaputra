@@ -1,5 +1,5 @@
-// imports from .component
-import AllContactsScreen from "../../screens/AllContactsScreen/AllContactsScreen.component";
+// imports from .container
+import AllContactsScreen from "../../screens/AllContactsScreen/AllContactsScreen.container";
 
 export {
   AllContactsScreen,

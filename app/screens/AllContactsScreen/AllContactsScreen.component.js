@@ -23,6 +23,11 @@ class AllContactsScreen extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    const { requestGetAllContacts } = this.props;
+    requestGetAllContacts();
+  }
+
   render() {
     return (
       <View style={Styles.container}>

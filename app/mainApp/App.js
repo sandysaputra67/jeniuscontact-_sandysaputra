@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 
 import { Styles } from './App.styles';
-import { Colors } from '../app/themes/colors';
-import RootNavigator from '../app/navigation/rootNavigator/rootNavigator';
+import { Colors } from '../themes/colors';
+import RootNavigator from '../navigation/rootNavigator/rootNavigator';
 
 class App extends Component {
   constructor(props) {
