@@ -17,12 +17,10 @@ const Button = ({
 }) => (
   <TouchableOpacity
     onPress={onPress}
-    disabled={disabled}
-    style={Styles.container(height, width, disabled)}
+    disabled={disabled || loading}
+    style={Styles.container(height, width, disabled, loading)}
   >
-    <Text style={Styles.text}>
-      {text}
-    </Text>
+    {loading ? <ActivityIndicator /> : <Text style={Styles.text}>{text}</Text>}
   </TouchableOpacity>
 );
 

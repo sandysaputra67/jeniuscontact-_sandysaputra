@@ -4,12 +4,16 @@ import {
   Text,
   Keyboard,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
+import { isEmpty } from 'lodash';
 
 import { Styles } from './AddContact.styles';
 import { Fonts } from '../../themes/fonts';
 import { Colors } from '../../themes/colors';
+import { Routes } from '../../navigation/screenConfig/routes';
 import { returnNumberOnly } from '../../utils/helpers';
+import { NavigationActions, StackActions } from 'react-navigation';
 import Button from '../../components/Button/Button.component';
 import StackHeader from '../../components/StackHeader/StackHeader.component';
 import NormalTextInput from '../../components/NormalTextInput/NormalTextInput.component';
@@ -55,8 +59,52 @@ class AddContact extends Component {
     }
   }
 
-  onPressSave = () => {
-    console.log(this.state, '<== heehhe')
+  onPressSave = async () => {
+    const { firstName, lastName, photo, age } = this.state;
+    const { requestSaveContact, error } = this.props;
+
+    await requestSaveContact(
+      firstName,
+      lastName,
+      photo,
+      Number(age),
+    );
+
+    if (isEmpty(error)) {
+      Alert.alert(
+        'Success!',
+        'Successfully saved contact',
+        [
+          { text: 'OK', onPress: this.resetNavigation },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      Alert.alert(
+        'Oops!',
+        'Something went wrong',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false }
+      );
+    }
+  }
+
+  resetNavigation = () => {
+    const { navigation } = this.props;
+
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({
+        routeName: Routes.AllContactsScreen,
+        params: {
+          reset: true,
+        },
+      })],
+    });
+
+    navigation.dispatch(resetAction);
   }
 
   ageValue = () => {
@@ -128,6 +176,7 @@ class AddContact extends Component {
   }
 
   renderButton = () => {
+    const { saveLoading } = this.props;
     const { firstName, lastName, photo, age } = this.state;
     let disabled = true;
 
@@ -143,6 +192,7 @@ class AddContact extends Component {
           text='SAVE'
           onPress={this.onPressSave}
           disabled={disabled}
+          loading={saveLoading}
         />
       </View>
     );

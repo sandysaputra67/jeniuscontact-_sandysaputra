@@ -3,7 +3,9 @@ import {
   View,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
+import { isEmpty } from 'lodash';
 
 import { Styles } from './AllContactsScreen.styles';
 import { Images } from '../../themes/images';
@@ -32,9 +34,21 @@ class AllContactsScreen extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { requestGetAllContacts } = this.props;
-    requestGetAllContacts();
+    await requestGetAllContacts();
+    const { error } = this.props;
+
+    if (!isEmpty(error)) {
+      Alert.alert(
+        'Oops!',
+        'Something went wrong',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false }
+      );
+    }
   }
 
   renderItem = ({ item, index }) => {
