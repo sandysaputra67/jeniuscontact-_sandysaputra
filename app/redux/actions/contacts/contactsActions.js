@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { get } from 'lodash';
+import { get, orderBy } from 'lodash';
 
 import {
   GET_ALL_CONTACTS,
@@ -46,8 +46,9 @@ const requestGetAllContacts = () => async (dispatch) => {
   try {
     const result = await axios.get(getAllContactsEndpoint);
     const data = get(result, 'data.data', []);
+    const sortedData = orderBy(data, ['firstName'], ['asc']);
 
-    dispatch(getAllContactsSuccess(data));
+    dispatch(getAllContactsSuccess(sortedData));
   } catch (error) {
     dispatch(getAllContactsFailed(error.response));
   }
