@@ -24,6 +24,7 @@ import NormalTextInput from '../../components/NormalTextInput/NormalTextInput.co
 class ContactDetails extends Component {
   static navigationOptions = ({ navigation }) => {
     const goBack = () => navigation.goBack();
+    const deleteContact = navigation.getParam('deleteContact');
 
     return {
       header: (
@@ -31,7 +32,7 @@ class ContactDetails extends Component {
           title={'Details'}
           onPressLeft={goBack}
           rightIcon={Images.DELETE}
-          onPressRight={goBack}
+          onPressRight={deleteContact}
         />
       ),
     };
@@ -50,6 +51,10 @@ class ContactDetails extends Component {
   async componentDidMount() {
     const { navigation, requestGetContactDetails } = this.props;
     const contactId = navigation.getParam('id');
+
+    navigation.setParams({
+      deleteContact: this.deleteContact(contactId),
+    });
 
     await requestGetContactDetails(contactId);
 
@@ -85,6 +90,55 @@ class ContactDetails extends Component {
 
   dismissKeyboard = () => {
     Keyboard.dismiss();
+  }
+
+  deleteContact = (contactId) => () => {
+    Alert.alert(
+      'Warning!',
+      'Are you sure you want to delete this contact?',
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: 'OK', onPress: this.confirmDelete(contactId) },
+      ],
+      { cancelable: false }
+    );
+  }
+
+  confirmDelete = (contactId) => async () => {
+    const { requestDeleteContact } = this.props;
+
+    await requestDeleteContact(contactId);
+    const { error } = this.props;
+
+    if (!isEmpty(error)) {
+      Alert.alert(
+        'Oops!',
+        'Something went wrong',
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      await this.setState({
+        firstName: '',
+        lastName: '',
+        photo: '',
+        age: '',
+      });
+
+      Alert.alert(
+        'Success!',
+        'Successfully deleted contact',
+        [
+          { text: 'OK', onPress: this.resetNavigation },
+        ],
+        { cancelable: false }
+      );
+    }
   }
 
   onChangeText = (type) => (data) => {
@@ -260,9 +314,9 @@ class ContactDetails extends Component {
   }
 
   render() {
-    const { detailsLoading } = this.props;
+    const { detailsLoading, deleteLoading } = this.props;
 
-    if (detailsLoading) {
+    if (detailsLoading || deleteLoading) {
       return (
         <View style={Styles.loading}>
           <ActivityIndicator size="large" />

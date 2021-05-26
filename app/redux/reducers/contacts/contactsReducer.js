@@ -22,6 +22,7 @@ const initialState = {
   saveLoading: false,
   detailsLoading: false,
   editLoading: false,
+  deleteLoading: false,
   contacts: [],
   contactDetails: {},
   message: '',
@@ -116,6 +117,28 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: EDIT_CONTACT_SUCCESS,
         editLoading: false,
+        message: action.data,
+      };
+    case DELETE_CONTACT:
+      return {
+        ...state,
+        actionStatus: DELETE_CONTACT,
+        deleteLoading: true,
+        error: {},
+        message: '',
+      };
+    case DELETE_CONTACT_FAILED:
+      return {
+        ...state,
+        actionStatus: DELETE_CONTACT_FAILED,
+        deleteLoading: false,
+        error: action.error,
+      };
+    case DELETE_CONTACT_SUCCESS:
+      return {
+        ...state,
+        actionStatus: DELETE_CONTACT_SUCCESS,
+        deleteLoading: false,
         message: action.data,
       };
     default:

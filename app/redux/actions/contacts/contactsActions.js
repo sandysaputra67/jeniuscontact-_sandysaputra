@@ -22,7 +22,8 @@ import {
   getAllContacts as getAllContactsEndpoint,
   saveContact as saveContactEndpoint,
   getContactDetails as getContactDetailsEndpoint,
-  editContact as editContactEndpoint
+  editContact as editContactEndpoint,
+  deleteContact as deleteContactEndpoint
 } from '../../../api/contacts/contactsEndpoints';
 
 const getAllContacts = () => ({
@@ -146,9 +147,37 @@ const requestEditContact = (contactId, firstName, lastName, photo, age) => async
   }
 }
 
+const deleteContact = () => ({
+  type: DELETE_CONTACT,
+});
+
+const deleteContactFailed = (error) => ({
+  type: DELETE_CONTACT_FAILED,
+  error,
+});
+
+const deleteContactSuccess = (data) => ({
+  type: DELETE_CONTACT_SUCCESS,
+  data,
+});
+
+const requestDeleteContact = (contactId) => async (dispatch) => {
+  dispatch(deleteContact());
+
+  try {
+    const result = await axios.delete(deleteContactEndpoint(contactId));
+    const data = get(result, 'data.message', {});
+
+    dispatch(deleteContactSuccess(data));
+  } catch (error) {
+    dispatch(deleteContactFailed(error.response));
+  }
+};
+
 export {
   requestGetAllContacts,
   requestSaveContact,
   requestGetContactDetails,
   requestEditContact,
+  requestDeleteContact,
 };
