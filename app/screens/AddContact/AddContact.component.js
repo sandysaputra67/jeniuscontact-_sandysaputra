@@ -119,6 +119,8 @@ class AddContact extends Component {
     let placeHolder;
     let value;
     let keyboardType = 'default';
+    let autoCapitalize = 'words'
+    let maxLength = 50;
     switch (type) {
       case 'firstName':
         title = 'First Name';
@@ -134,12 +136,15 @@ class AddContact extends Component {
         title = 'Photo';
         placeHolder = 'Add link to photo here';
         value = photo;
+        autoCapitalize = 'none';
         break;
       case 'age':
         title = 'Age';
         placeHolder = '47';
         value = this.ageValue();
         keyboardType = 'number-pad';
+        maxLength = 3;
+        autoCapitalize = 'none'
         break;
       default:
         break;
@@ -162,8 +167,8 @@ class AddContact extends Component {
           value={value}
           keyboardType={keyboardType}
           renderUnderline
-          maxLength={50}
-          autoCapitalize='none'
+          maxLength={maxLength}
+          autoCapitalize={autoCapitalize}
         />
       </View>
     );
