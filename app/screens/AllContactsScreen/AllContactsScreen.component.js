@@ -5,8 +5,19 @@ import {
 } from 'react-native';
 
 import { Styles } from './AllContactsScreen.styles';
+import StackHeader from '../../components/StackHeader/StackHeader.component';
 
 class AllContactsScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      header: (
+        <StackHeader
+          title={'Contacts'}
+        />
+      ),
+    };
+  }
+
   constructor(props) {
     super(props);
     this.state = {};
