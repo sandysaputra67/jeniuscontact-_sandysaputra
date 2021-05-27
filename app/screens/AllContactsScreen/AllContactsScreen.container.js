@@ -6,7 +6,7 @@ import { requestGetAllContacts } from '../../redux/actions/contacts/contactsActi
 const mapStateToProps = (state) => ({
   contacts: state.contacts.contacts,
   loading: state.contacts.loading,
-  error: state.contacts.error,
+  getAllContactsError: state.contacts.getAllContactsError,
 });
 
 const mapDispatchToProps = (dispatch) => ({

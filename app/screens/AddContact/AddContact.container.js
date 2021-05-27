@@ -5,7 +5,7 @@ import { requestSaveContact } from '../../redux/actions/contacts/contactsActions
 
 const mapStateToProps = (state) => ({
   saveLoading: state.contacts.saveLoading,
-  error: state.contacts.error,
+  saveContactError: state.contacts.saveContactError,
 });
 
 const mapDispatchToProps = (dispatch) => ({

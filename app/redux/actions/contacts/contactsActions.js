@@ -143,7 +143,6 @@ const requestEditContact = (contactId, firstName, lastName, photo, age) => async
     dispatch(editContactSuccess(data));
 
   } catch (error) {
-    console.log(error)
     dispatch(editContactFailed(error.response));
   }
 }

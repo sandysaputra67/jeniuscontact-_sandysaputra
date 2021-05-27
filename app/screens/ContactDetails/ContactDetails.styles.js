@@ -26,6 +26,18 @@ const Styles = StyleSheet.create({
   },
   loading: {
     marginTop: 10,
+  },
+  imageContainer: {
+    marginVertical: 10,
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    alignSelf: 'center',
+  },
+  image: {
+    height: 80,
+    width: 80,
+    borderRadius: 40,
   }
 });
 

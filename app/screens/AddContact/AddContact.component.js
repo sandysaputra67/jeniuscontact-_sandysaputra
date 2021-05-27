@@ -5,6 +5,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Alert,
+  Image,
 } from 'react-native';
 import { isEmpty } from 'lodash';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -13,6 +14,7 @@ import { Styles } from './AddContact.styles';
 import { Fonts } from '../../themes/fonts';
 import { Colors } from '../../themes/colors';
 import { Routes } from '../../navigation/screenConfig/routes';
+import { Images } from '../../themes/images';
 import { returnNumberOnly } from '../../utils/helpers';
 import { NavigationActions, StackActions } from 'react-navigation';
 import Button from '../../components/Button/Button.component';
@@ -62,7 +64,7 @@ class AddContact extends Component {
 
   onPressSave = async () => {
     const { firstName, lastName, photo, age } = this.state;
-    const { requestSaveContact, error } = this.props;
+    const { requestSaveContact, saveContactError } = this.props;
 
     await requestSaveContact(
       firstName,
@@ -71,7 +73,7 @@ class AddContact extends Component {
       Number(age),
     );
 
-    if (isEmpty(error)) {
+    if (isEmpty(saveContactError)) {
       Alert.alert(
         'Success!',
         'Successfully saved contact',
@@ -90,6 +92,22 @@ class AddContact extends Component {
         { cancelable: false }
       );
     }
+  }
+
+  renderImage = () => {
+    const { photo } = this.state;
+
+    return (
+      <View style={Styles.imageContainer}>
+        <Image
+          key={photo}
+          style={Styles.image}
+          defaultSource={Images.PERSON}
+          source={{ uri: photo }}
+          resizeMode="contain"
+        />
+      </View>
+    );
   }
 
   resetNavigation = () => {
@@ -145,7 +163,7 @@ class AddContact extends Component {
         placeHolder = '47';
         value = this.ageValue();
         keyboardType = 'number-pad';
-        maxLength = 3;
+        maxLength = 2;
         autoCapitalize = 'none'
         break;
       default:
@@ -213,6 +231,7 @@ class AddContact extends Component {
           extraHeight={20}
           enableOnAndroid
         >
+          {this.renderImage()}
           {this.renderNormalTextInput('firstName')}
           {this.renderNormalTextInput('lastName')}
           {this.renderNormalTextInput('photo')}

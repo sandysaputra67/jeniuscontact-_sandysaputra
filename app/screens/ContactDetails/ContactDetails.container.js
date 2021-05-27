@@ -9,7 +9,9 @@ const mapStateToProps = (state) => ({
   editLoading: state.contacts.editLoading,
   deleteLoading: state.contacts.deleteLoading,
   contactDetails: state.contacts.contactDetails,
-  error: state.contacts.error,
+  detailsError: state.contacts.detailsError,
+  editError: state.contacts.editError,
+  deleteError: state.contacts.deleteError,
 });
 
 const mapDispatchToProps = (dispatch) => ({

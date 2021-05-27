@@ -26,7 +26,11 @@ const initialState = {
   contacts: [],
   contactDetails: {},
   message: '',
-  error: {},
+  getAllContactsError: {},
+  saveContactError: {},
+  detailsError: {},
+  editError: {},
+  deleteError: {},
 };
 
 const contactsReducer = (state = initialState, action) => {
@@ -36,7 +40,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: GET_ALL_CONTACTS,
         loading: true,
-        error: {},
+        getAllContactsError: {},
         contacts: [],
       };
     case GET_ALL_CONTACTS_FAILED:
@@ -44,7 +48,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: GET_ALL_CONTACTS_FAILED,
         loading: false,
-        error: action.error,
+        getAllContactsError: action.error,
       };
     case GET_ALL_CONTACTS_SUCCESS:
       return {
@@ -58,7 +62,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: SAVE_CONTACT,
         saveLoading: true,
-        error: {},
+        saveContactError: {},
         message: '',
       };
     case SAVE_CONTACT_FAILED:
@@ -66,7 +70,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: SAVE_CONTACT_FAILED,
         saveLoading: false,
-        error: action.error,
+        saveContactError: action.error,
       };
     case SAVE_CONTACT_SUCCESS:
       return {
@@ -80,7 +84,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: GET_CONTACT_DETAILS,
         detailsLoading: true,
-        error: {},
+        detailsError: {},
         contactDetails: {},
       };
     case GET_CONTACT_DETAILS_FAILED:
@@ -88,7 +92,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: GET_CONTACT_DETAILS_FAILED,
         detailsLoading: false,
-        error: action.error,
+        detailsError: action.error,
       };
     case GET_CONTACT_DETAILS_SUCCESS:
       return {
@@ -102,7 +106,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: EDIT_CONTACT,
         editLoading: true,
-        error: {},
+        editError: {},
         message: '',
       };
     case EDIT_CONTACT_FAILED:
@@ -110,7 +114,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: EDIT_CONTACT_FAILED,
         editLoading: false,
-        error: action.error,
+        editError: action.error,
       };
     case EDIT_CONTACT_SUCCESS:
       return {
@@ -124,7 +128,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: DELETE_CONTACT,
         deleteLoading: true,
-        error: {},
+        deleteError: {},
         message: '',
       };
     case DELETE_CONTACT_FAILED:
@@ -132,7 +136,7 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         actionStatus: DELETE_CONTACT_FAILED,
         deleteLoading: false,
-        error: action.error,
+        deleteError: action.error,
       };
     case DELETE_CONTACT_SUCCESS:
       return {

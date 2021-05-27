@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Alert,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { get, isEmpty, isEqual } from 'lodash';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -58,8 +59,8 @@ class ContactDetails extends Component {
 
     await requestGetContactDetails(contactId);
 
-    const { error } = this.props;
-    if (!isEmpty(error)) {
+    const { detailsError } = this.props;
+    if (!isEmpty(detailsError)) {
       Alert.alert(
         'Oops!',
         'Something went wrong',
@@ -111,9 +112,9 @@ class ContactDetails extends Component {
     const { requestDeleteContact } = this.props;
 
     await requestDeleteContact(contactId);
-    const { error } = this.props;
+    const { deleteError } = this.props;
 
-    if (!isEmpty(error)) {
+    if (!isEmpty(deleteError)) {
       Alert.alert(
         'Oops!',
         'Something went wrong',
@@ -157,7 +158,7 @@ class ContactDetails extends Component {
   onPressEdit = async () => {
     const { navigation } = this.props;
     const { firstName, lastName, photo, age } = this.state;
-    const { requestEditContact, error } = this.props;
+    const { requestEditContact, editError } = this.props;
     const contactId = navigation.getParam('id');
 
     await requestEditContact(
@@ -168,7 +169,7 @@ class ContactDetails extends Component {
       Number(age),
     );
 
-    if (isEmpty(error)) {
+    if (isEmpty(editError)) {
       Alert.alert(
         'Success!',
         'Successfully edited contact',
@@ -210,6 +211,22 @@ class ContactDetails extends Component {
     return returnNumberOnly(age);
   }
 
+  renderImage = () => {
+    const { photo } = this.state;
+
+    return (
+      <View style={Styles.imageContainer}>
+        <Image
+          key={photo}
+          style={Styles.image}
+          defaultSource={Images.PERSON}
+          source={{ uri: photo }}
+          resizeMode="contain"
+        />
+      </View>
+    );
+  }
+
   renderNormalTextInput = (type) => {
     const { firstName, lastName, photo } = this.state;
 
@@ -242,7 +259,7 @@ class ContactDetails extends Component {
         placeHolder = '47';
         value = this.ageValue();
         keyboardType = 'number-pad';
-        maxLength = 3;
+        maxLength = 2;
         autoCapitalize = 'none'
         break;
       default:
@@ -331,6 +348,7 @@ class ContactDetails extends Component {
           extraHeight={20}
           enableOnAndroid
         >
+          {this.renderImage()}
           {this.renderNormalTextInput('firstName')}
           {this.renderNormalTextInput('lastName')}
           {this.renderNormalTextInput('photo')}

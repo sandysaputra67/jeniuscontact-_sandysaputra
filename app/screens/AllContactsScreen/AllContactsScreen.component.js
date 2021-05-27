@@ -37,9 +37,9 @@ class AllContactsScreen extends Component {
   async componentDidMount() {
     const { requestGetAllContacts } = this.props;
     await requestGetAllContacts();
-    const { error } = this.props;
+    const { getAllContactsError } = this.props;
 
-    if (!isEmpty(error)) {
+    if (!isEmpty(getAllContactsError)) {
       Alert.alert(
         'Oops!',
         'Something went wrong',
